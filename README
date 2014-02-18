@@ -1,0 +1,6 @@
+Verify the integrity of external resources.
+
+With slink you can verify the integrity of external resources before loading them.
+It uses the signing and verifying capabilities of PKC to do this.
+
+See the demo for how it works.

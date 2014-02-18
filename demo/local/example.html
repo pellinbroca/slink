@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>slink.js</title>
+    </head>
+    <body>
+        <div style="display:none">
+
+
+<!-- Copy/paste the certificate into an element with the attribute 'data-slink-certificate' -->
+            <div data-slink-certificate>
+                -----BEGIN CERTIFICATE-----
+                MIIFXTCCA0WgAwIBAgIJAPRv6TRWwASQMA0GCSqGSIb3DQEBCwUAMEUxCzAJBgNV
+                BAYTAkFVMRMwEQYDVQQIDApTb21lLVN0YXRlMSEwHwYDVQQKDBhJbnRlcm5ldCBX
+                aWRnaXRzIFB0eSBMdGQwHhcNMTQwMjE4MDI0NjMzWhcNMTUwMjE4MDI0NjMzWjBF
+                MQswCQYDVQQGEwJBVTETMBEGA1UECAwKU29tZS1TdGF0ZTEhMB8GA1UECgwYSW50
+                ZXJuZXQgV2lkZ2l0cyBQdHkgTHRkMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIIC
+                CgKCAgEArcVmWCMhlA/e/mMKMTELaLiHC/UI9uwpc+Y2M69czxsw54Mom7/g5P6z
+                cwtBDR7Pd9a92mR10v+svRmFS6FwTdL2etxgqtG9n6ejuVgL1hp8J55RqSowsa7c
+                clRHBOmvbVLjpXm878c8SpDa0GQBdzHxcD+qwVy9IRSYnGd1oPZkXfPEGcmz9CHq
+                drTVkakc0tBoPSXJY9E9QLTSMdo+god68YHXCHEbVbj6kyl0RQhCo5NTS12Ctrne
+                Cy0TfOnutUEBKpMXueQugZ10tK/WJT2s9VZqH1ThRf9Mrd1O/7/dYc06XR6ksmHH
+                VgLMOJ4dNfSCBgz4OSWm2Is2rTJi4aQH9srSp/g4lALhjNaNl/Jxec0osBpFvyTK
+                ctOZkVvlgdt7EuynPabO7bM793HxmGgoIOpwu/bTijk4ftZb2qJ7llqAHXCid3k2
+                dym37+XD2NUbYZ0vyxovDPE5DdndP6/WFy8FIaBklAJFLiEn54jUdlsW9STKXzj6
+                AzIH+gQqSF90CUv7eYuHgN/T8CjFB93a1XXgs4CHzJAIxOczGKCfoWqryG+uYWo8
+                Czs77Ae6+cck0CkvNuvJaz7sEs9DrNkBr/R4C4/5ZNfEhxWxdd86HSx/RwUgn4Su
+                QejLGwGvr2J2mWWNHKcmTMVT0piuYta/SO/EeLt5u5mxXgkg3wkCAwEAAaNQME4w
+                HQYDVR0OBBYEFH19i2+CrK4VXT9pwvwT9IYhRy6gMB8GA1UdIwQYMBaAFH19i2+C
+                rK4VXT9pwvwT9IYhRy6gMAwGA1UdEwQFMAMBAf8wDQYJKoZIhvcNAQELBQADggIB
+                AJ0SfiyzcYL3Ymc1yXQ9AVdKzwPpVDdipQJZrmjNqORZgQDqDkQEdJINwntWqJdq
+                gtNIcn1MDhaN4bNxMjRzMShxRDXZ9gozOd6DHVEd0YMZOg9Bo+xGTUTiwwV97Lvh
+                QQRMi4Mf5xJ9TrbyZZ0MhvDh443vTz3jRgEgwZAiLnNAbhVbSdup5TU0oI00Am0z
+                tlpPZbjr4z+gzWx3a0qLoz4IyZnuuAwwa0MS5AnNMHHkvlwXfczv+hHt9H5o7s9x
+                SDxQCPMP3Stm6Qx0qV1rJ4U6TDZ1RBAO0sYTpMlxesGJRfeZgYlKNwoSLAHF7UGY
+                mUKDxiRTkmKvsFKsp/0s1GSaGKBBsiXvGnCBPBC3Ui1UismemuiI5M2sDdQ3U4He
+                jfurr63sTnm2NrYSLgQYB2oAQZOC6bz/IUA7RBGL9MpktbZmSjeR6WovLEUkuNOf
+                zHbNWxqDDIfBBZlRQkH4LzLFu2Gzq06hA1SRCb5zmg6+TedmuYa9Cx3kyN4Gwm4U
+                j2/r48zzIhLDUqY/5WI7ziD0SlPcGAoiHjOqCIb/9eWlTFqMyFu+IhayYTBDNItB
+                SBj6VFGsZFp23gATGYM93pBUMxbxQuRNUEJTimMbWdIa2yvH3i3GS5Y1AWvGOzo0
+                H/5/p8iNXi5uN5omkWKqNAEmosXFFcXdgkTvX+fwuNAT
+                -----END CERTIFICATE-----
+            </div>
+
+
+<!--
+Every element with the 'data-slink' attribute is considered to be a remote resource with a signature.
+Upon initialization of slink.js all such elements are loaded via an XMLHttpRequest and have their signatures checked.
+
+The data-slink attribute is supposed to point to the remote resource.
+The signature is assumed to be at <remote-resource-location>.sig, so http://localhost:8000/main.js.sig in the example below.
+
+If the signature of the resource is valid, then the resource is further processed according to the following attributes:
+1. data-slink-javascript
+    If this attribute is present, then the remote resource's content is injected into a dynamically created <script> tag.
+    Which is in turn injected into the <head> element of the page.
+
+2. data-slink-store=X
+    If this attribute is present, then the remote resource's content is stored in a global object at: SlinkResources[X],
+    so SlinkResources['main'] in the example below
+
+If the signature of the resource is invalid, it is completely ignored.
+-->
+            <div data-slink="http://localhost:8000/main.js" data-slink-javascript data-slink-store="main" />
+
+
+<!-- An example of a remote resource with an invalid signature -->
+            <div data-slink="http://localhost:8000/invalid.js" data-slink-javascript data-slink-store="invalid" />
+
+
+<!-- After this execution the signed resources are loaded. -->
+            <script src="../../bin/slink-min.js"></script>
+
+        </div>
+    </body>
+</html>
